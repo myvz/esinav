@@ -1,0 +1,25 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+    <h:outputStylesheet library="css" name="default.css"/>
+</h:head>
+<h:body style="background-color: #CEE3F6;">
+    <h:form>
+        <p:dock position="top">
+            <p:menuitem value="Kullanıcı" icon="/resources/images/dock/kullanici.png" url="../admin/kullaniciIslemleri.xhtml"/>
+            <p:menuitem value="Ders"  icon="/resources/images/dock/ders.png" url="../admin/dersIslemleri.xhtml"/>
+            <p:menuitem value="Konu"  icon="/resources/images/dock/konu.png" url="../teacher/konuIslemleri.xhtml"/>
+            <p:menuitem value="Soru"  icon="/resources/images/dock/soru.png" url="../teacher/soruIslemleri.xhtml"/>
+            <p:menuitem value="Sınav" icon="/resources/images/dock/sinav.png" url="../teacher/sinavIslemleri.xhtml"/>
+        </p:dock>
+        <div class="content">
+            <ui:insert name="content">
+                Default Content
+            </ui:insert>
+        </div>
+    </h:form>
+</h:body>
+</html>

@@ -1,0 +1,52 @@
+<ui:composition template="../layout.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ui="http://java.sun.com/jsf/facelets">
+    <ui:define name="content">
+        <h:form>
+           <p:tabView id="tabView" dynamic="true" cache="true">
+                <p:growl id="msgs" showDetail="true" sticky="false" />
+                <p:tab id="dersListesi" title="Ders Listesi" >
+                    <h:panelGrid id="derslerPaneli" columns="1">
+                        <p:dataTable value="#{dersMBean.dersList}" var="allDers" id="dersler"  scrollable="true" >
+                            <p:column headerText="Ders">
+                                <h:outputText value="#{allDers.dersAdi}"/>
+                            </p:column>
+                        </p:dataTable>
+                    </h:panelGrid>
+                </p:tab>
+                <p:tab id="dersEkle" title="Ders Tanımlama">
+                    <h:panelGrid columns="3" cellpadding="5">
+                        <p:outputLabel value="Ders Adı :"/>
+                        <p:inputText id="ders_id" value="#{dersMBean.ders.dersAdi}">
+                            <f:validateLength minimum="1" />
+                        </p:inputText>
+                        <p:commandButton id="ders_save" value="Kaydet" action="#{dersMBean.save}" update="derslerPaneli msgs" />
+                    </h:panelGrid>
+                </p:tab>
+                <p:tab id="dersGuncelle" title="Ders Güncelleme" rendered="#{dersMBean.isIslemGuncelle}">
+
+                    <h:panelGrid id="dersGuncellePanel" columns="3" cellpadding="5">
+                        <p:outputLabel value="Ders Adı :"/>
+                        <p:inputText id="dersAdi" value="#{dersMBean.ders.dersAdi}">
+                            <f:validateLength minimum="1" />
+                        </p:inputText>
+                        <p:commandButton id="ders_guncelle" value="Güncelle" action="#{dersMBean.guncelle}" update="derslerPaneli msgs"/>
+                    </h:panelGrid>
+
+                    <h:panelGrid id="dersGuncellePanel" columns="3" cellpadding="5" rendered="#{dersMBean.ders ne null}">
+                        <p:outputLabel value="Ders Adı :"/>
+                        <p:inputText id="dersAdi" value="#{dersMBean.ders.dersAdi}">
+                            <f:validateLength minimum="1" />
+                        </p:inputText>
+                        <p:commandButton id="ders_guncelle" value="Güncelle" action="#{dersMBean.guncelle}" update="derslerPaneli msgs"/>
+                    </h:panelGrid>
+                </p:tab>
+            </p:tabView>
+
+
+        </h:form>
+    </ui:define>
+</ui:composition>
