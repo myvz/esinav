@@ -14,9 +14,6 @@
                             <p:column headerText="Ders">
                                 <h:outputText value="#{allDers.dersAdi}"/>
                             </p:column>
-                            <p:column headerText="İşlem">
-                                <p:commandButton id="guncelle" ajax="true" action="#{dersMBean.setIsIslemGuncelle(true)}" update="dersGuncelle"/>
-                            </p:column>
                         </p:dataTable>
                     </h:panelGrid>
                 </p:tab>
@@ -31,6 +28,21 @@
                 </p:tab>
                 <p:tab id="dersGuncelle" title="Ders Güncelleme" rendered="#{dersMBean.isIslemGuncelle}">
 
+                    <h:panelGrid id="dersGuncellePanel" columns="3" cellpadding="5">
+                        <p:outputLabel value="Ders Adı :"/>
+                        <p:inputText id="dersAdi" value="#{dersMBean.ders.dersAdi}">
+                            <f:validateLength minimum="1" />
+                        </p:inputText>
+                        <p:commandButton id="ders_guncelle" value="Güncelle" action="#{dersMBean.guncelle}" update="derslerPaneli msgs"/>
+                    </h:panelGrid>
+
+                    <h:panelGrid id="dersGuncellePanel" columns="3" cellpadding="5" rendered="#{dersMBean.ders ne null}">
+                        <p:outputLabel value="Ders Adı :"/>
+                        <p:inputText id="dersAdi" value="#{dersMBean.ders.dersAdi}">
+                            <f:validateLength minimum="1" />
+                        </p:inputText>
+                        <p:commandButton id="ders_guncelle" value="Güncelle" action="#{dersMBean.guncelle}" update="derslerPaneli msgs"/>
+                    </h:panelGrid>
                 </p:tab>
             </p:tabView>
 
