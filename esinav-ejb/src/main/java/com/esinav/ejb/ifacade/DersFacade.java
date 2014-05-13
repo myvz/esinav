@@ -48,4 +48,9 @@ public class DersFacade implements DersFacadeLocal {
     public List<Ders> findAll() {
         return dersDao.listAll();
     }
+
+    @Override
+    public Ders findDersByName(String dersAdi) {
+        return dersDao.findDersByName(dersAdi);
+    }
 }

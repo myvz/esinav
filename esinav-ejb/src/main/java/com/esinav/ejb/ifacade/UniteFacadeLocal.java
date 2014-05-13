@@ -6,6 +6,7 @@
 
 package com.esinav.ejb.ifacade;
 
+import com.esinav.ejb.entity.Ders;
 import com.esinav.ejb.entity.Unite;
 import java.util.List;
 import javax.ejb.Local;

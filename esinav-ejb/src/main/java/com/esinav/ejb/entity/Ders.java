@@ -9,21 +9,18 @@ package com.esinav.ejb.entity;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 
 /**
  *
  * @author myavuz
  */
 @Entity
+@NamedQuery(name="Ders.findDersByName",query = "SELECT d FROM Ders d where d.dersAdi=:dersadi")
 public class Ders implements Serializable {
     private static final long serialVersionUID = 1L;
+    public static String FIND_BY_NAME="Ders.findDersByName";
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -86,7 +83,7 @@ public class Ders implements Serializable {
 
     @Override
     public String toString() {
-        return "com.esinav.ejb.entity.Ders[ id=" + id + " ]";
+        return dersAdi;
     }
     
 }

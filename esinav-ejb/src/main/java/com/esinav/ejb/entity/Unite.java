@@ -90,7 +90,7 @@ public class Unite implements Serializable {
 
     @Override
     public String toString() {
-        return "com.esinav.ejb.entity.Unite[ id=" + id + " ]";
+        return uniteAdi;
     }
     
 }

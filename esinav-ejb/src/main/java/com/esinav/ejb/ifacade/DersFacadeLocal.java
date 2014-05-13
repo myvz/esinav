@@ -23,5 +23,6 @@ public interface DersFacadeLocal {
     public Ders find(Long entityID);
     public void delete(Ders ders);
     public List<Ders> findAll();
+    public Ders findDersByName(String dersAdi) ;
     
 }
