@@ -16,7 +16,7 @@ import javax.persistence.*;
  * @author myavuz
  */
 @Entity
-@NamedQuery(name="Ders.findDersByName",query = "SELECT d FROM Ders d where d.dersAdi=:dersadi")
+@NamedQuery(name="Ders.findDersByName",query = "SELECT d FROM Ders d left join fetch d.uniteler where d.dersAdi=:dersadi")
 public class Ders implements Serializable {
     private static final long serialVersionUID = 1L;
     public static String FIND_BY_NAME="Ders.findDersByName";
@@ -66,6 +66,10 @@ public class Ders implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
+        if (object==null) {
+            return false;
+        }
+
         if (!(object instanceof Ders)) {
             return false;
         }

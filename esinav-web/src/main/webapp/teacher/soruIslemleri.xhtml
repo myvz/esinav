@@ -6,9 +6,70 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets">
     <ui:define name="content">
         <h:form>
-            <f:view>
-                <h:outputLabel value="Hello, world"/>
-            </f:view>
+            <p:tabView id="soru_islemleri" dynamic="true" cache="true" effect="fade" effectDuration="normal">
+                <p:tab id="soru_tanimlama" title="Soru Tanımlama">
+                    <p:wizard flowListener="#{soruWizardMBean.onFlowProcess}">
+                        <p:tab id="unite" title="Ünite">
+                            <p:panel header="Ünite Bilgileri" id="panel">
+                                <p:messages/>
+                                <h:panelGrid columns="2" columnClasses="label, value">
+                                    <h:outputText value="Ders : *"/>
+                                    <p:selectOneMenu id="dersler" value="#{soruWizardMBean.ders}" converter="dersConverter">
+                                        <f:selectItem itemValue="" itemLabel="Seçiniz"/>
+                                        <f:selectItems value="#{soruWizardMBean.dersList}" var="ders" itemValue="#{ders}" itemLabel="#{ders.dersAdi}"/>
+                                        <p:ajax event="change" update="panel label uniteler"/>
+                                    </p:selectOneMenu>
+
+                                    <h:outputText id="label" value="Uniteler : *" rendered="#{soruWizardMBean.ders ne null}"/>
+                                    <p:dataTable id="uniteler" rendered="#{soruWizardMBean.ders ne null}" var="unite" value="#{soruWizardMBean.uniteList}" selectionMode="single" selection="#{soruWizardMBean.unite}"
+                                            rowKey="#{unite.id}">
+                                        <f:facet name="header">
+                                            Unite Seçiniz
+                                        </f:facet>
+                                        <p:column headerText="Ünite Adı">
+                                            <h:outputText value="#{unite.uniteAdi}"/>
+                                        </p:column>
+                                        <p:column headerText="Seviye">
+                                            <h:outputText value="#{unite.seviye}"/>
+                                        </p:column>
+                                    </p:dataTable>
+                                </h:panelGrid>
+                            </p:panel>
+                        </p:tab>
+                        <p:tab id="soru" title="Soru">
+                            <p:editor id="soru_editor" widgetVar="editorWidget"  value="#{soruWizardMBean.soru.soru}" width="600" />
+                        </p:tab>
+                        <p:tab id="secenekler" title="Seçenek Tanımlama">
+                            <p:panel header="Seçenek Tanımlamaları" id="secenek">
+                                 <p:fieldset legend="Seçenek 1" toggleable="true" toggleSpeed="500">
+                                     <p:editor id="secenek1_editor"   value="#{soruWizardMBean.secenek1.secenek}" width="600" />
+                                 </p:fieldset>
+                                 <p:fieldset legend="Seçenek 2" toggleable="true" toggleSpeed="500">
+                                     <p:editor id="secenek2_editor" value="#{soruWizardMBean.secenek2.secenek}" width="600" />
+                                 </p:fieldset>
+                                 <p:fieldset legend="Seçenek 3" toggleable="true" toggleSpeed="500">
+                                     <p:editor id="secenek3_editor"   value="#{soruWizardMBean.secenek3.secenek}" width="600" />
+                                 </p:fieldset>
+                                 <p:fieldset legend="Seçenek 4" toggleable="true" toggleSpeed="500">
+                                     <p:editor id="secenek4_editor"   value="#{soruWizardMBean.secenek4.secenek}" width="600" />
+                                 </p:fieldset>
+                            </p:panel>
+                        </p:tab>
+                        <p:tab id="soru_view" title="Soru Önizleme">
+                            <p:fieldset legend="Soru">
+                                   <h:outputText escape="false" value=" #{soruWizardMBean.soru.soru}"/> <br/>
+                                   <h:outputText escape="false" value=" #{soruWizardMBean.secenek1.secenek}"/><br/>
+                                   <h:outputText escape="false" value=" #{soruWizardMBean.secenek2.secenek}"/><br/>
+                                   <h:outputText escape="false" value=" #{soruWizardMBean.secenek3.secenek}"/><br/>
+                                   <h:outputText escape="false" value=" #{soruWizardMBean.secenek4.secenek}"/>
+                            </p:fieldset>
+                        </p:tab>
+                        <p:tab id="confirmation" title="Kaydet">
+                            <p:commandButton value="Submit" actionListener="#{soruWizardMBean.save}" process="@this"/>
+                        </p:tab>
+                    </p:wizard>
+                </p:tab>
+            </p:tabView>
         </h:form>
     </ui:define>
 </ui:composition>

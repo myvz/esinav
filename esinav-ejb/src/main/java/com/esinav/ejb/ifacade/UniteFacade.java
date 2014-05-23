@@ -7,6 +7,7 @@
 package com.esinav.ejb.ifacade;
 
 import com.esinav.ejb.dao.UniteDao;
+import com.esinav.ejb.entity.Ders;
 import com.esinav.ejb.entity.Unite;
 import java.util.List;
 import javax.ejb.EJB;
@@ -45,6 +46,11 @@ public class UniteFacade implements UniteFacadeLocal {
     @Override
     public List<Unite> findAll() {
        return uniteDao.listAll();
+    }
+
+    @Override
+    public List<Unite> findByDersAndLevel(Ders ders) {
+        return uniteDao.findByDersAndLevel(ders);
     }
 
 }

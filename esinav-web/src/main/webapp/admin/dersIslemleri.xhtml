@@ -6,8 +6,8 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets">
     <ui:define name="content">
         <h:form>
+           <p:growl id="msgs" showDetail="true" sticky="false" />
            <p:tabView id="tabView" dynamic="true" cache="true">
-                <p:growl id="msgs" showDetail="true" sticky="false" />
                 <p:tab id="dersListesi" title="Ders Listesi" >
                     <h:panelGrid id="derslerPaneli" columns="1">
                         <p:dataTable value="#{dersMBean.dersList}" var="allDers" id="dersler"  scrollable="true" >

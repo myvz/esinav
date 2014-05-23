@@ -32,7 +32,7 @@ public class Unite implements Serializable {
     @Column(name="SEVIYE")
     private Integer seviye;
     
-    @JoinColumn(name="DERS_ID",insertable = false,updatable = false)
+    @JoinColumn(name="DERS_ID")
     @ManyToOne
     private Ders ders;    
     

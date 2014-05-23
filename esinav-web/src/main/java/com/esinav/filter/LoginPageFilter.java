@@ -15,7 +15,8 @@ public class LoginPageFilter implements Filter{
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse,   FilterChain filterChain) throws IOException, ServletException{
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
-
+        request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
         if(request.getUserPrincipal() != null){ //If user is already authenticated
             String navigateString = "";
             if(request.isUserInRole("admin")){

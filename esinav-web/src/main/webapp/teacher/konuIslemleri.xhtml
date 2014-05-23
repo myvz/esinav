@@ -6,21 +6,55 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets">
     <ui:define name="content">
         <h:form>
-            <p:tabView id="tabView" dynamic="true" cache="true">
-                <p:growl id="msgs" showDetail="true" sticky="false" />
-                <p:tab id="konuListesi" title="Sorgula">
-                    <h:outputText value="Ders Listesi: " />
-                    <p:selectOneMenu value="#{konuMBean.selectedDers}" converter="dersConverter">
-                        <f:selectItems value="#{konuMBean.dersList}" var="ders" itemValue="#{ders.id}" itemLabel="#{ders.dersAdi}"/>
-                    </p:selectOneMenu>
-                    <p:commandButton id="sorgulaButton" value="Sorgula" update="uniteList"></p:commandButton>
+            <p:growl id="msgs" showDetail="true" sticky="false"  />
+            <p:tabView id="tabView" dynamic="true" cache="true" effect="fade" effectDuration="normal">
 
-                    <p:panelGrid id="uniteList" rendered="#{konuMBean.selectedDers ne null}">
-                           <p:dataTable id="uniteler" var="unite" value="#{konuMBean.selectedDers.uniteler}">
-                               <p:column headerText="Ünite Adı">
-                                   <h:outputText value="#{unite.uniteAdi}"/>
-                               </p:column>
-                           </p:dataTable>
+                <p:tab id="konuListesi" title="Sorgula">
+                    <p:panelGrid id="container">
+                        <f:facet name="header">Ünite Sorgulama</f:facet>
+                        <p:row>
+                            <p:column>
+                                <p:selectOneMenu value="#{konuMBean.selectedDers}" converter="dersConverter">
+                                    <f:selectItem itemValue=""  itemLabel="Seçiniz"/>
+                                    <f:selectItems value="#{konuMBean.dersList}" var="ders" itemValue="#{ders}" itemLabel="#{ders.dersAdi}"/>
+                                </p:selectOneMenu>
+                            </p:column>
+                            <p:column>
+                                <p:commandButton id="sorgulaButton" value="Sorgula" update="uniteList"></p:commandButton>
+                            </p:column>
+                        </p:row>
+                        <p:row>
+                            <p:column colspan="2">
+                                <p:panelGrid id="uniteList" columns="1">
+                                    <p:dataTable id="uniteler" var="unite" value="#{konuMBean.selectedDers.uniteler}" rendered="#{konuMBean.selectedDers ne null}"  >
+                                        <p:column headerText="Ünite Adı">
+                                            <h:outputText value="#{unite.uniteAdi}"/>
+                                        </p:column>
+                                        <p:column headerText="Ünite Adı">
+                                            <h:outputText value="#{unite.seviye}"/>
+                                        </p:column>
+                                    </p:dataTable>
+                                </p:panelGrid>
+                            </p:column>
+                        </p:row>
+                    </p:panelGrid>
+
+
+                </p:tab>
+                <p:tab id="unite_tanimlama" title="Ünite Tanımlama">
+                    <p:panelGrid columns="2" id="unite_form">
+                        <f:facet name="header">
+                            Unite Tanımlama
+                        </f:facet>
+                        <h:outputText for="unite_adi" value="Ünite Adı :"/> <p:inputText id="unite_adi" value="#{konuMBean.unite.uniteAdi}" label="Unite Adı : "/>
+                        <h:outputText for="unite_seviye" value="Ünite Seviyesi :"/> <p:inputText id="unite_seviye" value="#{konuMBean.unite.seviye}" label="Unite Seviyesi : "/>
+                        <h:outputText for="ders_listesi" value="Dersler : "/> <p:selectOneMenu id="ders_listesi" value="#{konuMBean.unite.ders}" converter="dersConverter" label="Dersler : ">
+                            <f:selectItem itemValue=""  itemLabel="Seçiniz"/>
+                            <f:selectItems value="#{konuMBean.dersList}" var="ders" itemValue="#{ders}" itemLabel="#{ders.dersAdi}"/>
+                        </p:selectOneMenu>
+                        <f:facet name="footer">
+                            <h:commandButton id="submit"  value="Kaydet" action="#{konuMBean.save}" update="unite_form msgs"></h:commandButton>
+                        </f:facet>
                     </p:panelGrid>
                 </p:tab>
                 <!--

@@ -22,4 +22,6 @@ public interface UniteFacadeLocal {
     public Unite update(Unite unite);
     public Unite find(Long entityID);
     public List<Unite> findAll();
+    public List<Unite> findByDersAndLevel(Ders ders);
 }
+

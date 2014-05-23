@@ -20,7 +20,7 @@ public abstract class GenericDao<T> {
     public static final String UNIT_NAME = "com.esinav.persistence";
 
     @PersistenceContext(unitName = UNIT_NAME)
-    private EntityManager em;
+    protected EntityManager em;
 
     private Class<T> entitiyClass;
 

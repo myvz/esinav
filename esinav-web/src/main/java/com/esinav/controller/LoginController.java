@@ -9,6 +9,7 @@ import com.esinav.ejb.ifacade.KullaniciFacadeLocal;
 import java.io.IOException;
 import java.io.Serializable;
 import java.security.Principal;
+import java.util.Locale;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
@@ -60,8 +61,8 @@ public class LoginController implements Serializable {
         try {
             String navigateString = "";
             // Checks if username and password are valid if not throws a ServletException
-            request.login(username, password);
-            kullaniciFacade.findKullaniciByKullaniciAdi(username);
+            if (kullanici==null)  request.login(username, password);
+            kullanici=kullaniciFacade.findKullaniciByKullaniciAdi(username);
             // gets the user principle and navigates to the appropriate page
             Principal principal = request.getUserPrincipal();
             if (request.isUserInRole("admin")) {
@@ -81,7 +82,7 @@ public class LoginController implements Serializable {
 
         } catch (ServletException e) {
 
-            context.addMessage(null, new FacesMessage("Error!", "The username or password you provided does not match our records."));
+            context.addMessage(null, new FacesMessage("Error!", "Yanlış Kullanici Adı veya Şifre"));
         }
     }
 

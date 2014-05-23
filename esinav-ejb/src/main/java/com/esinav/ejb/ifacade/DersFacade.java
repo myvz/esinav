@@ -51,6 +51,8 @@ public class DersFacade implements DersFacadeLocal {
 
     @Override
     public Ders findDersByName(String dersAdi) {
-        return dersDao.findDersByName(dersAdi);
+
+        Ders ders=dersDao.findDersByName(dersAdi);
+        return ders;
     }
 }
