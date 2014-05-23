@@ -6,11 +6,12 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets">
     <ui:define name="content">
         <h:form>
-           <p:growl id="msgs" showDetail="true" sticky="false" />
+
            <p:tabView id="tabView" dynamic="true" cache="true">
+               <p:growl id="message" sticky="false"/>
                 <p:tab id="dersListesi" title="Ders Listesi" >
                     <h:panelGrid id="derslerPaneli" columns="1">
-                        <p:dataTable value="#{dersMBean.dersList}" var="allDers" id="dersler"  scrollable="true" >
+                        <p:dataTable value="#{commonService.dersList}" var="allDers" id="dersler"  scrollable="true" >
                             <p:column headerText="Ders">
                                 <h:outputText value="#{allDers.dersAdi}"/>
                             </p:column>
@@ -23,7 +24,7 @@
                         <p:inputText id="ders_id" value="#{dersMBean.ders.dersAdi}">
                             <f:validateLength minimum="1" />
                         </p:inputText>
-                        <p:commandButton id="ders_save" value="Kaydet" action="#{dersMBean.save}" update="derslerPaneli msgs" />
+                        <p:commandButton id="ders_save" value="Kaydet" actionListener="#{dersMBean.save}" update="derslerPaneli message" />
                     </h:panelGrid>
                 </p:tab>
                <!--
@@ -47,8 +48,6 @@
                 </p:tab>
                 dd-->
             </p:tabView>
-
-
         </h:form>
     </ui:define>
 </ui:composition>

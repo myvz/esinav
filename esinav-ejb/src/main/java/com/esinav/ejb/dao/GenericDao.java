@@ -30,7 +30,6 @@ public abstract class GenericDao<T> {
     }
 
     public void save(T entity) {
-        System.out.println();
         em.persist(entity);
     }
 

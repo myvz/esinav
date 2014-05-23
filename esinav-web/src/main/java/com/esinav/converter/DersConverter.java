@@ -3,9 +3,12 @@ package com.esinav.converter;
 import com.esinav.ejb.entity.Ders;
 import com.esinav.ejb.ifacade.DersFacadeLocal;
 import com.esinav.ejb.ifacade.UniteFacadeLocal;
+import com.esinav.services.CommonService;
 
+import javax.annotation.Resource;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
@@ -19,32 +22,28 @@ import java.io.Serializable;
 @ManagedBean
 public class DersConverter implements Converter,Serializable{
 
-    @EJB
-    private DersFacadeLocal dersFacade;
+   @ManagedProperty(value = "#{commonService}")
+   private CommonService commonService;
 
 
 
     @Override
     public Object getAsObject(FacesContext facesContext, UIComponent uiComponent, String s) {
         if (s.isEmpty()) return null;
-        return dersFacade.findDersByName(s);
-        /*
-        Long id;
-        if (s==null || s.length()==0) {
-            return null;
-        }
-        else {
-            id=Long.parseLong(s);
-            if (id==null)  return null;
-        }
-
-        return dersFacade.find(id);
-        */
-
+        return commonService.getDers(Long.parseLong(s));
     }
 
     @Override
     public String getAsString(FacesContext facesContext, UIComponent uiComponent, Object o) {
-        return o.toString();
+        if (o==null) return null;
+        return ((Ders)o).getId().toString();
+    }
+
+    public CommonService getCommonService() {
+        return commonService;
+    }
+
+    public void setCommonService(CommonService commonService) {
+        this.commonService = commonService;
     }
 }

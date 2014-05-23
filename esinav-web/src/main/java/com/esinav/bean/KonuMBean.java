@@ -2,15 +2,15 @@ package com.esinav.bean;
 
 import com.esinav.ejb.entity.Ders;
 import com.esinav.ejb.entity.Unite;
-import com.esinav.ejb.ifacade.DersFacadeLocal;
 import com.esinav.ejb.ifacade.UniteFacadeLocal;
+import com.esinav.services.CommonService;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
-import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import java.io.Serializable;
 import java.util.List;
@@ -23,19 +23,17 @@ import java.util.List;
 public class KonuMBean implements Serializable {
 
     private Unite unite;
+    private List<Unite> uniteList;
     private Ders selectedDers;
-    private List<Ders> dersList;
-
     @EJB
     private UniteFacadeLocal uniteFacade;
-    @EJB
-    private DersFacadeLocal dersFacade;
+
+    @ManagedProperty(value = "#{commonService}")
+    private CommonService commonService;
 
     @PostConstruct
     public void init () {
         unite=new Unite();
-        if (dersList==null || dersList.size()==0)
-            dersList=dersFacade.findAll();
     }
 
     public void save() {
@@ -64,9 +62,6 @@ public class KonuMBean implements Serializable {
         this.selectedDers = selectedDers;
     }
 
-    public List<Ders> getDersList() {
-        return dersList;
-    }
     private void giveSaveSuccesfullMessage() {
         FacesContext context=FacesContext.getCurrentInstance();
         context.addMessage(null, new FacesMessage("Başarılı", "Kayıt Gerçekleşti"));
@@ -76,5 +71,22 @@ public class KonuMBean implements Serializable {
         FacesContext context=FacesContext.getCurrentInstance();
         context.addMessage(null, new FacesMessage("Başarılı", "Kayıt Gerçekleşti"));
 
+    }
+
+    public CommonService getCommonService() {
+        return commonService;
+    }
+
+    public void setCommonService(CommonService commonService) {
+        this.commonService = commonService;
+    }
+
+    public List<Unite> getUniteList() {
+        uniteList=commonService.getDersWithUnits(selectedDers).getUniteler();
+        return uniteList;
+    }
+
+    public void setUniteList(List<Unite> uniteList) {
+        this.uniteList = uniteList;
     }
 }

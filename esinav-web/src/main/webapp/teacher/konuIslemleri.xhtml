@@ -15,18 +15,19 @@
                         <p:row>
                             <p:column>
                                 <p:selectOneMenu value="#{konuMBean.selectedDers}" converter="dersConverter">
-                                    <f:selectItem itemValue=""  itemLabel="Seçiniz"/>
-                                    <f:selectItems value="#{konuMBean.dersList}" var="ders" itemValue="#{ders}" itemLabel="#{ders.dersAdi}"/>
+                                    <f:selectItem itemValue="#{null}"  itemLabel="Seçiniz"/>
+                                    <f:selectItems value="#{commonService.dersList}" var="ders" itemValue="#{ders}" itemLabel="#{ders.dersAdi}"/>
+                                    <p:ajax event="change" update="uniteList"/>
                                 </p:selectOneMenu>
                             </p:column>
                             <p:column>
-                                <p:commandButton id="sorgulaButton" value="Sorgula" update="uniteList"></p:commandButton>
+                                <p:commandButton id="sorgulaButton" value="Sorgula" update="uniteList"/>
                             </p:column>
                         </p:row>
                         <p:row>
                             <p:column colspan="2">
                                 <p:panelGrid id="uniteList" columns="1">
-                                    <p:dataTable id="uniteler" var="unite" value="#{konuMBean.selectedDers.uniteler}" rendered="#{konuMBean.selectedDers ne null}"  >
+                                    <p:dataTable id="uniteler" var="unite" value="#{konuMBean.uniteler}" rendered="#{konuMBean.selectedDers ne null}">
                                         <p:column headerText="Ünite Adı">
                                             <h:outputText value="#{unite.uniteAdi}"/>
                                         </p:column>
@@ -50,10 +51,10 @@
                         <h:outputText for="unite_seviye" value="Ünite Seviyesi :"/> <p:inputText id="unite_seviye" value="#{konuMBean.unite.seviye}" label="Unite Seviyesi : "/>
                         <h:outputText for="ders_listesi" value="Dersler : "/> <p:selectOneMenu id="ders_listesi" value="#{konuMBean.unite.ders}" converter="dersConverter" label="Dersler : ">
                             <f:selectItem itemValue=""  itemLabel="Seçiniz"/>
-                            <f:selectItems value="#{konuMBean.dersList}" var="ders" itemValue="#{ders}" itemLabel="#{ders.dersAdi}"/>
+                            <f:selectItems value="#{commonService.dersList}" var="ders" itemValue="#{ders}" itemLabel="#{ders.dersAdi}"/>
                         </p:selectOneMenu>
                         <f:facet name="footer">
-                            <h:commandButton id="submit"  value="Kaydet" action="#{konuMBean.save}" update="unite_form msgs"></h:commandButton>
+                            <h:commandButton id="submit"  value="Kaydet" actionListener="#{konuMBean.save}" update="unite_form msgs"></h:commandButton>
                         </f:facet>
                     </p:panelGrid>
                 </p:tab>

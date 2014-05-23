@@ -2,14 +2,17 @@ package com.esinav.bean;
 
 import com.esinav.ejb.entity.Ders;
 import com.esinav.ejb.ifacade.DersFacadeLocal;
+import com.esinav.services.CommonService;
 
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -17,35 +20,33 @@ import java.util.List;
  */
 @ManagedBean
 @RequestScoped
-public class DersMBean {
+public class DersMBean implements Serializable{
 
-    private List<Ders> dersList;
+
     private Ders ders;
     private Boolean isIslemGuncelle=Boolean.FALSE;
-    @EJB
-    private DersFacadeLocal dersFacade;
+    @ManagedProperty(value = "#{commonService}")
+    private CommonService commonService;
 
     @PostConstruct
     public  void init() {
         ders=new Ders();
-        dersList=dersFacade.findAll();
+
     }
 
     public void save() {
         if (validateDersAdi()) {
-            dersFacade.save(ders);
-            dersList.add(ders);
+            commonService.addDers(ders);
             giveSaveSuccesfullMessage();
         }
         else {
             giveDuplicationMessage();
         }
-
-
+        init();
     }
     public void guncelle() {
         if (validateDersAdi()) {
-            dersFacade.update(ders);
+            commonService.updateDers(ders);
             giveSaveSuccesfullMessage();
         }
         else {
@@ -61,9 +62,7 @@ public class DersMBean {
         this.ders = ders;
     }
 
-    public List<Ders> getDersList() {
-        return dersList;
-    }
+
 
     public Boolean getIsIslemGuncelle() {
         return isIslemGuncelle;
@@ -84,8 +83,14 @@ public class DersMBean {
 
     }
     private Boolean validateDersAdi() {
-        return !dersList.contains(ders);
+        return commonService.isDersNameAvailable(ders);
     }
 
+    public CommonService getCommonService() {
+        return commonService;
+    }
 
+    public void setCommonService(CommonService commonService) {
+        this.commonService = commonService;
+    }
 }

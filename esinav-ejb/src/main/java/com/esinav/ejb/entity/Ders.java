@@ -6,6 +6,8 @@
 
 package com.esinav.ejb.entity;
 
+import org.hibernate.engine.FetchStrategy;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
