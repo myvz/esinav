@@ -36,6 +36,7 @@
                 <configuration>
                     <version>6</version>
                     <defaultLibBundleDir>lib</defaultLibBundleDir>
+                    <unpackTypes>war,ejb</unpackTypes>
                 </configuration>
             </plugin>
         </plugins>

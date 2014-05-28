@@ -7,9 +7,6 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 
-/**
- * Created by myavuz on 20.05.2014.
- */
 public class UniteConverter implements Converter {
 
     @EJB

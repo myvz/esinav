@@ -1,8 +1,6 @@
 package com.esinav.utility;
 
-/**
- * Created by myavuz on 26.04.2014.
- */
+
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -14,10 +12,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
-/**
- * Password string to SHA256 conversion utility class
- * @author Emre Simtay <emre@simtay.com>
- */
+
 @FacesConverter("com.esinav.utility.SHAConverter")
 public class SHAConverter implements Converter {
 

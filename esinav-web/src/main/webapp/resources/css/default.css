@@ -10,3 +10,9 @@
     width: 1024px;
     margin-top: 5%;
 }
+
+.ui-widget,
+.ui-widget .ui-widget
+{
+    font-size:90%;
+}

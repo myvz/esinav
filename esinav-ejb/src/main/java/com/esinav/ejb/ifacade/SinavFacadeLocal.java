@@ -6,14 +6,12 @@
 
 package com.esinav.ejb.ifacade;
 
+import com.esinav.ejb.entity.Kullanici;
 import com.esinav.ejb.entity.Sinav;
 import java.util.List;
 import javax.ejb.Local;
 
-/**
- *
- * @author myavuz
- */
+
 @Local
 public interface SinavFacadeLocal {
     
@@ -22,4 +20,6 @@ public interface SinavFacadeLocal {
     public Sinav find(Long entityID);
     public Sinav update(Sinav sinav);
     public List<Sinav> findAll();
+    public List<Sinav> getKullaniciSinav(Kullanici kullanici);
+
 }

@@ -9,10 +9,7 @@ package com.esinav.ejb.ifacade;
 import com.esinav.ejb.entity.CevapAnahtari;
 import javax.ejb.Local;
 
-/**
- *
- * @author myavuz
- */
+
 @Local
 public interface CevapAnahtariFacadeLocal {
     

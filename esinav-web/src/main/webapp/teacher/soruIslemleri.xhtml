@@ -5,24 +5,70 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:ui="http://java.sun.com/jsf/facelets">
     <ui:define name="content">
-        <h:form>
+        <h:form id="form">
+            <p:growl id="msgs" showDetail="true" sticky="false"/>
             <p:tabView id="soru_islemleri" dynamic="true" cache="true" effect="fade" effectDuration="normal">
+                <p:tab id="soru_sorgula" title="Sorgulama">
+                    <p:panel id="sorgu_paneli" header="Soru Sorgulama">
+                        <h:panelGrid columns="2" columnClasses="label, value">
+                            <h:outputText value="Ders :"/>
+                            <p:selectOneMenu id="sorgu_derslist" value="#{soruMBean.ders}" converter="dersConverter" required="true"
+                                             style="width:160px" filter="true" filterMatchMode="startsWith">
+                                <f:selectItem itemValue="" itemLabel="Seçiniz"/>
+                                <f:selectItems value="#{commonService.dersList}" var="ders" itemValue="#{ders}" itemLabel="#{ders.dersAdi}"/>
+                                <p:ajax event="change" update="sorgu_paneli"/>
+                            </p:selectOneMenu>
+                            <h:outputText id="l_uniteler" value="Uniteler : *" rendered="#{soruMBean.ders ne null}"/>
+                            <p:dataTable id="dt_uniteler" rendered="#{soruMBean.ders ne null}" var="unite" value="#{soruMBean.ders.uniteler}" selectionMode="single" selection="#{soruMBean.unite}"
+                                         rowKey="#{unite.id}" emptyMessage="Kayıt Bulunamadı" >
+                                <f:facet name="header">
+                                    Unite Seçiniz
+                                </f:facet>
+                                <p:ajax event="rowSelect" listener="#{soruMBean.onRowSelect}" update=":form:soru_islemleri:soru_list_paneli" process="dt_uniteler"/>
+                                <p:ajax event="rowUnselect" listener="#{soruMBean.onRowUnselect}" update=":form:soru_islemleri:soru_list_paneli" process="dt_uniteler"/>
+                                <p:column headerText="Ünite Adı">
+                                    <h:outputText value="#{unite.uniteAdi}"/>
+                                </p:column>
+                                <p:column headerText="Seviye">
+                                    <h:outputText value="#{unite.seviye}"/>
+                                </p:column>
+
+                            </p:dataTable>
+
+                        </h:panelGrid>
+                        <h:panelGrid id="soru_list_paneli" columns="1" width="100%">
+                            <h:outputText value="Soru Bulunamadı" rendered="#{soruMBean.soruList eq null and unite ne null}"/>
+                            <ui:repeat id="soru_list" rendered="#{soruMBean.soruList ne null}" value="#{soruMBean.soruList}"  var="soru">
+                                <f:facet name="header">
+                                    Sorgu Sonuçları
+                                </f:facet>
+                                <p:fieldset legend="Soru" toggleable="true" toggleSpeed="200">
+                                    <h:outputText escape="false" value=" #{soru.soru}"/> <br/><br/>
+                                    <ui:repeat id="secenek_list" value="#{soru.secenekler}" var="secenek">
+                                        <li><h:outputText escape="false" style="padding-left: 10px" value=" #{secenek.secenek}"/></li>
+                                    </ui:repeat>
+                                </p:fieldset>
+                                <br/>
+                            </ui:repeat>
+                        </h:panelGrid>
+                    </p:panel>
+                </p:tab>
                 <p:tab id="soru_tanimlama" title="Soru Tanımlama">
                     <p:wizard flowListener="#{soruWizardMBean.onFlowProcess}">
                         <p:tab id="unite" title="Ünite">
-                            <p:panel header="Ünite Bilgileri" id="panel">
+                            <p:panel header="Ünite Bilgileri" id="unite_panel">
                                 <p:messages/>
                                 <h:panelGrid columns="2" columnClasses="label, value">
                                     <h:outputText value="Ders : *"/>
-                                    <p:selectOneMenu id="dersler" value="#{soruWizardMBean.ders}" converter="dersConverter">
+                                    <p:selectOneMenu id="dersler" value="#{soruWizardMBean.ders}" converter="dersConverter" required="true"
+                                                     style="width:160px" filter="true" filterMatchMode="startsWith">
                                         <f:selectItem itemValue="" itemLabel="Seçiniz"/>
-                                        <f:selectItems value="#{soruWizardMBean.dersList}" var="ders" itemValue="#{ders}" itemLabel="#{ders.dersAdi}"/>
-                                        <p:ajax event="change" update="panel label uniteler"/>
+                                        <f:selectItems value="#{commonService.dersList}" var="ders" itemValue="#{ders}" itemLabel="#{ders.dersAdi}"/>
+                                        <p:ajax event="change" update="unite_panel label uniteler"/>
                                     </p:selectOneMenu>
-
                                     <h:outputText id="label" value="Uniteler : *" rendered="#{soruWizardMBean.ders ne null}"/>
                                     <p:dataTable id="uniteler" rendered="#{soruWizardMBean.ders ne null}" var="unite" value="#{soruWizardMBean.uniteList}" selectionMode="single" selection="#{soruWizardMBean.unite}"
-                                            rowKey="#{unite.id}">
+                                            rowKey="#{unite.id}" emptyMessage="Kayıt Bulunamadı">
                                         <f:facet name="header">
                                             Unite Seçiniz
                                         </f:facet>
@@ -41,16 +87,16 @@
                         </p:tab>
                         <p:tab id="secenekler" title="Seçenek Tanımlama">
                             <p:panel header="Seçenek Tanımlamaları" id="secenek">
-                                 <p:fieldset legend="Seçenek 1" toggleable="true" toggleSpeed="500">
-                                     <p:editor id="secenek1_editor"   value="#{soruWizardMBean.secenek1.secenek}" width="600" />
+                                 <p:fieldset legend="Seçenek 1" toggleable="true" toggleSpeed="300">
+                                     <p:editor id="secenek1_editor"   value="#{soruWizardMBean.secenek1.secenek}" width="600" required="true" />
                                  </p:fieldset>
-                                 <p:fieldset legend="Seçenek 2" toggleable="true" toggleSpeed="500">
-                                     <p:editor id="secenek2_editor" value="#{soruWizardMBean.secenek2.secenek}" width="600" />
+                                 <p:fieldset legend="Seçenek 2" toggleable="true" toggleSpeed="300">
+                                     <p:editor id="secenek2_editor" value="#{soruWizardMBean.secenek2.secenek}" width="600" required="true" />
                                  </p:fieldset>
-                                 <p:fieldset legend="Seçenek 3" toggleable="true" toggleSpeed="500">
+                                 <p:fieldset legend="Seçenek 3" toggleable="true" toggleSpeed="300">
                                      <p:editor id="secenek3_editor"   value="#{soruWizardMBean.secenek3.secenek}" width="600" />
                                  </p:fieldset>
-                                 <p:fieldset legend="Seçenek 4" toggleable="true" toggleSpeed="500">
+                                 <p:fieldset legend="Seçenek 4" toggleable="true" toggleSpeed="300">
                                      <p:editor id="secenek4_editor"   value="#{soruWizardMBean.secenek4.secenek}" width="600" />
                                  </p:fieldset>
                             </p:panel>
@@ -63,9 +109,7 @@
                                    <h:outputText escape="false" value=" #{soruWizardMBean.secenek3.secenek}"/><br/>
                                    <h:outputText escape="false" value=" #{soruWizardMBean.secenek4.secenek}"/>
                             </p:fieldset>
-                        </p:tab>
-                        <p:tab id="confirmation" title="Kaydet">
-                            <p:commandButton value="Submit" actionListener="#{soruWizardMBean.save}" process="@this"/>
+                            <h:commandButton value="Kaydet" actionListener="#{soruWizardMBean.save}" update="msgs" process="@this"></h:commandButton>
                         </p:tab>
                     </p:wizard>
                 </p:tab>

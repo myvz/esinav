@@ -8,23 +8,23 @@
         <h:form>
 
            <p:tabView id="tabView" dynamic="true" cache="true">
-               <p:growl id="message" sticky="false"/>
                 <p:tab id="dersListesi" title="Ders Listesi" >
-                    <h:panelGrid id="derslerPaneli" columns="1">
+                    <p:panelGrid id="derslerPaneli" columns="1">
                         <p:dataTable value="#{commonService.dersList}" var="allDers" id="dersler"  scrollable="true" >
                             <p:column headerText="Ders">
                                 <h:outputText value="#{allDers.dersAdi}"/>
                             </p:column>
                         </p:dataTable>
-                    </h:panelGrid>
+                    </p:panelGrid>
                 </p:tab>
                 <p:tab id="dersEkle" title="Ders Tanımlama">
-                    <h:panelGrid columns="3" cellpadding="5">
+                    <p:growl id="growl" showDetail="true" sticky="false"/>
+                    <h:panelGrid columns="2" columnClasses="label, value">
                         <p:outputLabel value="Ders Adı :"/>
                         <p:inputText id="ders_id" value="#{dersMBean.ders.dersAdi}">
                             <f:validateLength minimum="1" />
                         </p:inputText>
-                        <p:commandButton id="ders_save" value="Kaydet" actionListener="#{dersMBean.save}" update="derslerPaneli message" />
+                        <p:commandButton id="ders_save" value="Kaydet" actionListener="#{dersMBean.save}" update="growl derslerPaneli" ></p:commandButton>
                     </h:panelGrid>
                 </p:tab>
                <!--

@@ -7,23 +7,23 @@ import com.esinav.ejb.entity.Unite;
 import com.esinav.ejb.ifacade.DersFacadeLocal;
 import com.esinav.ejb.ifacade.SoruFacadeLocal;
 import com.esinav.ejb.ifacade.UniteFacadeLocal;
+import com.esinav.services.CommonService;
 import org.primefaces.event.FlowEvent;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 import javax.faces.event.ValueChangeEvent;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by myavuz on 20.05.2014.
- */
 @ManagedBean
 @ViewScoped
-
 public class SoruWizardMBean implements Serializable {
 
     private Unite unite;
@@ -35,13 +35,12 @@ public class SoruWizardMBean implements Serializable {
     private Secenek dogruSecenek = new Secenek();
 
     private Ders ders;
-
-
     private List<Unite> uniteList;
-    private List<Ders> dersList;
 
-    @EJB
-    private DersFacadeLocal dersFacede;
+
+    @ManagedProperty(value = "#{commonService}")
+    private CommonService commonService;
+
 
     @EJB
     private UniteFacadeLocal uniteFacade;
@@ -51,21 +50,11 @@ public class SoruWizardMBean implements Serializable {
 
     private boolean skip;
 
-    @PostConstruct
-    public void init() {
-        dersList = getDersList();
-    }
-
-
-    public List<Ders> getDersList() {
-        if (dersList != null) return dersList;
-        dersList = dersFacede.findAll();
-        return dersList;
-    }
 
     public List<Unite> getUniteList() {
 
-        uniteList = ders.getUniteler();
+        ders=commonService.getDersWithUnits(ders);
+        uniteList=ders.getUniteler();
         return uniteList;
     }
 
@@ -99,7 +88,7 @@ public class SoruWizardMBean implements Serializable {
         soru.setDogruSecenek(secenek1);
         soru.setUnite(unite);
         soruFacade.save(soru);
-
+        giveSaveSuccesfullMessage();
     }
 
     public Soru getSoru() {
@@ -164,5 +153,18 @@ public class SoruWizardMBean implements Serializable {
 
     public void setDogruSecenek(Secenek dogruSecenek) {
         this.dogruSecenek = dogruSecenek;
+    }
+
+    public CommonService getCommonService() {
+        return commonService;
+    }
+
+    public void setCommonService(CommonService commonService) {
+        this.commonService = commonService;
+    }
+
+    private void giveSaveSuccesfullMessage() {
+        FacesContext context=FacesContext.getCurrentInstance();
+        context.addMessage(null, new FacesMessage("Basarili", "Kayit Gerceklesti"));
     }
 }

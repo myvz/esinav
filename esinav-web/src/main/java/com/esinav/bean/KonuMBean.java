@@ -15,9 +15,7 @@ import javax.faces.context.FacesContext;
 import java.io.Serializable;
 import java.util.List;
 
-/**
- * Created by myavuz on 13.05.2014.
- */
+
 @ManagedBean
 @RequestScoped
 public class KonuMBean implements Serializable {
@@ -37,9 +35,9 @@ public class KonuMBean implements Serializable {
     }
 
     public void save() {
-        unite.getDers().getUniteler().add(unite);
         uniteFacade.save(unite);
         giveSaveSuccesfullMessage();
+        unite=new Unite();
     }
 
     public void update(Unite unite) {
@@ -64,12 +62,12 @@ public class KonuMBean implements Serializable {
 
     private void giveSaveSuccesfullMessage() {
         FacesContext context=FacesContext.getCurrentInstance();
-        context.addMessage(null, new FacesMessage("Başarılı", "Kayıt Gerçekleşti"));
+        context.addMessage(null, new FacesMessage("Basarili", "Kayit Gerceklesti"));
     }
 
     private void giveDuplicationMessage() {
         FacesContext context=FacesContext.getCurrentInstance();
-        context.addMessage(null, new FacesMessage("Başarılı", "Kayıt Gerçekleşti"));
+        context.addMessage(null, new FacesMessage("Basarili", "Kayit Gerceklesti"));
 
     }
 
@@ -82,7 +80,8 @@ public class KonuMBean implements Serializable {
     }
 
     public List<Unite> getUniteList() {
-        uniteList=commonService.getDersWithUnits(selectedDers).getUniteler();
+        selectedDers=commonService.getDersWithUnits(selectedDers);
+        uniteList=selectedDers.getUniteler();
         return uniteList;
     }
 

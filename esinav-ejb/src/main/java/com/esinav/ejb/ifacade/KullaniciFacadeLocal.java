@@ -10,10 +10,7 @@ import com.esinav.ejb.entity.Kullanici;
 import java.util.List;
 import javax.ejb.Local;
 
-/**
- *
- * @author myavuz
- */
+
 @Local
 public interface KullaniciFacadeLocal {
     public void save(Kullanici kullanici);
@@ -22,4 +19,5 @@ public interface KullaniciFacadeLocal {
     public void delete(Kullanici kullanici);
     public List<Kullanici> findAll();
     public Kullanici findKullaniciByKullaniciAdi(String kullaniciAdi);
+    public List<Kullanici> findAllStudents() ;
 }

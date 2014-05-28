@@ -8,9 +8,11 @@ package com.esinav.ejb.dao;
 
 import com.esinav.ejb.entity.Kullanici;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.ejb.Stateless;
+import javax.persistence.Query;
 
 @Stateless
 public class KullaniciDao extends GenericDao<Kullanici> {
@@ -23,5 +25,11 @@ public class KullaniciDao extends GenericDao<Kullanici> {
         Map<String,Object> parameters=new HashMap<>();
         parameters.put("username", username);
         return super.findOneResult(Kullanici.FIND_BY_USERNAME, parameters);
+    }
+
+    public List<Kullanici> findAllStudents() {
+        Query query=em.createQuery("Select k from Kullanici k left join k.roller r where r.rolAdi=?1");
+        query.setParameter(1,"student");
+        return query.getResultList();
     }
 }

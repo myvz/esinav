@@ -5,10 +5,44 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:ui="http://java.sun.com/jsf/facelets">
     <ui:define name="content">
-        <h:form>
-            <f:view>
-                <h:outputLabel value="Hello, world"/>
-            </f:view>
+        <h:form id="form">
+            <p:dataTable id="sinav_list" value="#{sinavMBean.sinavList}" var="sinav" emptyMessage="Sinanınız Bulunmamaktadır">
+                  <f:facet name="header">
+                      Sinavlarınız
+                  </f:facet>
+                <p:column headerText="Sinav Adı">
+                     <h:outputText value="#{sinav.sinavAdi}"/>
+                </p:column>
+                <p:column headerText="Sinav Süresi">
+                    <h:outputText value="#{sinav.sinavSuresi}"/>
+                </p:column>
+                <p:column headerText="Sinav Zamani">
+                    <h:outputText value="#{sinav.sinavZamani}"/>
+                </p:column>
+                <p:column style="width: 4%;text-align: center">
+                    <p:commandButton update=":form:sinav_page" icon="ui-icon-search" title="Görüntüle">
+                        <f:setPropertyActionListener value="#{sinav}" target="#{sinavMBean.selectedSinav}"/>
+                    </p:commandButton>
+                </p:column>
+            </p:dataTable>
+            <p:panel id="sinav_page">
+                <p:dataTable  rendered="#{sinavMBean.selectedSinav ne null}" value="#{sinavMBean.selectedSinav.sorular}" var="soru">
+                    <f:facet name="header">
+                        #{sinavMBean.selectedSinav.sinavAdi}
+                    </f:facet>
+                    <p:column>
+                        <h:outputText escape="false" value="#{soru.soru}"/> <br/>
+                        <p:dataTable value="#{soru.secenekler}" var="secenek" selection="#{sinavMBean.selectedSecenek}" rowKey="#{secenek.id}" >
+                            <p:ajax event="rowSelectRadio" listener="#{sinavMBean.onRowSelect}"/>
+                            <p:column selectionMode="single" style="width:2%;text-align: center;"></p:column>
+                            <p:column>
+                                <h:outputText value="#{secenek.secenek}" escape="false"/>
+                            </p:column>
+                        </p:dataTable>
+                    </p:column>
+                </p:dataTable>
+                <p:commandButton actionListener="#{sinavMBean.save}" value="Sınavı Bitir"/>
+            </p:panel>
         </h:form>
     </ui:define>
 </ui:composition>

@@ -12,10 +12,7 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
-/**
- *
- * @author myavuz
- */
+
 @Stateless
 public class KullaniciFacade implements KullaniciFacadeLocal {
 
@@ -51,6 +48,11 @@ public class KullaniciFacade implements KullaniciFacadeLocal {
     @Override
     public Kullanici findKullaniciByKullaniciAdi(String kullaniciAdi) {
         return kullaniciDao.findUserByKullaniciAdi(kullaniciAdi);
+    }
+
+    @Override
+    public List<Kullanici> findAllStudents() {
+        return kullaniciDao.findAllStudents();
     }
 
 

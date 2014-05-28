@@ -6,16 +6,16 @@ import com.esinav.ejb.ifacade.UniteFacadeLocal;
 
 
 import javax.ejb.EJB;
-import javax.enterprise.context.ApplicationScoped;
+
+import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
+import java.io.Serializable;
 import java.util.List;
 
-/**
- * Created by myavuz on 23.05.2014.
- */
-@ManagedBean(name = "commonService")
+
+@ManagedBean(name = "commonService",eager = true)
 @ApplicationScoped
-public class CommonService {
+public class CommonService implements Serializable {
 
     @EJB
     private DersFacadeLocal dersFacade;

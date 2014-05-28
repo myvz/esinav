@@ -14,10 +14,7 @@ import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 
-/**
- *
- * @author myavuz
- */
+
 @Stateless
 public class DersFacade implements DersFacadeLocal {
 

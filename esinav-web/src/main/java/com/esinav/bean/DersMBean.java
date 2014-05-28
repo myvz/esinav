@@ -13,11 +13,8 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 import java.io.Serializable;
-import java.util.List;
 
-/**
- * Created by myavuz on 18.04.2014.
- */
+
 @ManagedBean
 @RequestScoped
 public class DersMBean implements Serializable{
@@ -25,6 +22,7 @@ public class DersMBean implements Serializable{
 
     private Ders ders;
     private Boolean isIslemGuncelle=Boolean.FALSE;
+
     @ManagedProperty(value = "#{commonService}")
     private CommonService commonService;
 
@@ -74,12 +72,12 @@ public class DersMBean implements Serializable{
 
     private void giveSaveSuccesfullMessage() {
         FacesContext context=FacesContext.getCurrentInstance();
-        context.addMessage(null, new FacesMessage("Başarılı", "Kayıt Gerçekleşti"));
+        context.addMessage(null, new FacesMessage("Basarili", "Kayit Gerceklesti"));
     }
 
     private void giveDuplicationMessage() {
         FacesContext context=FacesContext.getCurrentInstance();
-        context.addMessage(null, new FacesMessage("Başarılı", "Kayıt Gerçekleşti"));
+        context.addMessage(null, new FacesMessage("Basarisiz", "Eklenen ders zaten mevcut"));
 
     }
     private Boolean validateDersAdi() {

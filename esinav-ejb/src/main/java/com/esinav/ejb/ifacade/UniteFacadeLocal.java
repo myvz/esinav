@@ -11,10 +11,7 @@ import com.esinav.ejb.entity.Unite;
 import java.util.List;
 import javax.ejb.Local;
 
-/**
- *
- * @author myavuz
- */
+
 @Local
 public interface UniteFacadeLocal {
     public void save(Unite unite);

@@ -8,6 +8,8 @@ package com.esinav.ejb.ifacade;
 
 import com.esinav.ejb.dao.SoruDao;
 import com.esinav.ejb.entity.Soru;
+import com.esinav.ejb.entity.Unite;
+
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -42,6 +44,9 @@ public class SoruFacade implements SoruFacadeLocal {
     public List<Soru> findAll() {
         return soruDao.listAll();
     }
-    
 
+    @Override
+    public List<Soru> getSoruList(Unite unite) {
+        return soruDao.getSoruList(unite);
+    }
 }

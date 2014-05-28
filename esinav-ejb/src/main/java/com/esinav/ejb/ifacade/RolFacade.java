@@ -11,10 +11,7 @@ import com.esinav.ejb.entity.Rol;
 import java.util.List;
 import javax.ejb.Stateless;
 
-/**
- *
- * @author myavuz
- */
+
 @Stateless
 public class RolFacade implements RolFacadeLocal {
 

@@ -23,7 +23,7 @@ public class Cevap implements Serializable{
     @ManyToOne
     private Secenek kullaniciCevabi;
     
-    @JoinColumn(name="CEVAP_ANAHTARI_ID",insertable = false,updatable = false)
+    @JoinColumn(name="CEVAP_ANAHTARI_ID")
     @ManyToOne
     private CevapAnahtari cevapAnahtari;
 

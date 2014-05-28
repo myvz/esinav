@@ -1,16 +1,7 @@
 package com.esinav.ejb.entity;
 import java.util.Date;
 import java.util.List;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.Temporal;
+import javax.persistence.*;
 
 
 /**
@@ -45,11 +36,9 @@ public class Sinav {
     private Kullanici sinavSahibi;
     
     @JoinTable(name = "SINAV_SORU",joinColumns ={@JoinColumn(name = "SINAV_ID")},inverseJoinColumns = {@JoinColumn(name = "SORU_ID")})
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     private List<Soru> sorular; 
 
-
-         
 
     public long getId() {
         return id;
@@ -115,8 +104,5 @@ public class Sinav {
         this.sorular = sorular;
     }
 
-    
 
-    
-    
 }

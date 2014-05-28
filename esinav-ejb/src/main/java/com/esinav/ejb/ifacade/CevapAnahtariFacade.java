@@ -12,10 +12,7 @@ import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 
-/**
- *
- * @author myavuz
- */
+
 @Stateless
 public class CevapAnahtariFacade implements CevapAnahtariFacadeLocal {
 

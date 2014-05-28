@@ -7,13 +7,12 @@
 package com.esinav.ejb.ifacade;
 
 import com.esinav.ejb.entity.Soru;
+import com.esinav.ejb.entity.Unite;
+
 import java.util.List;
 import javax.ejb.Local;
 
-/**
- *
- * @author myavuz
- */
+
 @Local
 public interface SoruFacadeLocal {
     public void save(Soru soru);
@@ -21,4 +20,5 @@ public interface SoruFacadeLocal {
     public Soru find(Long entityID);
     public Soru update(Soru soru);
     public List<Soru> findAll();
+    List<Soru> getSoruList(Unite unite);
 }

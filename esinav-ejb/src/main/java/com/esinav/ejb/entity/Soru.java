@@ -1,17 +1,7 @@
 package com.esinav.ejb.entity;
 import java.util.Collection;
 import java.util.List;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -40,11 +30,11 @@ public class Soru {
    private Unite unite;//Her soru bir üniteye aittir
    
    @JoinTable(name="SORU_SECENEK",joinColumns={@JoinColumn(name = "SORU_ID")},inverseJoinColumns = {@JoinColumn(name = "SECENEK_ID")})
-   @OneToMany(cascade = CascadeType.PERSIST)
+   @OneToMany(cascade = CascadeType.PERSIST,fetch = FetchType.EAGER)
    private List<Secenek> secenekler;//Her sorunun 1 veya daha fazla seceneği vardır
    
    @JoinColumn(name = "DOGRU_SECENEK_ID",insertable = true,updatable = true)
-   @OneToOne(cascade = CascadeType.PERSIST)
+   @OneToOne(cascade = CascadeType.PERSIST,fetch = FetchType.EAGER)
    private Secenek dogruSecenek;// Her sorunun bir do ğru cevabı vardır 
 
     

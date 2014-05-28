@@ -4,15 +4,7 @@ package com.esinav.ejb.entity;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -35,7 +27,7 @@ public class CevapAnahtari implements Serializable{
 /*  @JoinTable(name = "CEVAP_ANAHTARI_CEVAP",joinColumns = {@JoinColumn(name="CEVAP_ANAHTARI_ID")},
           inverseJoinColumns = {@JoinColumn(name = "CEVAP_ID")})*/
   @JoinColumn(name = "CEVAP_ANAHTARI_ID")
-  @OneToMany
+  @OneToMany(cascade = CascadeType.PERSIST)
   private List<Cevap> cevaplar;
   
   @JoinColumn(name = "SINAV_ID")

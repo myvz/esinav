@@ -10,10 +10,7 @@ import com.esinav.ejb.entity.Ders;
 import java.util.List;
 import javax.ejb.Local;
 
-/**
- *
- * @author myavuz
- */
+
 @Local
 public interface DersFacadeLocal {
     

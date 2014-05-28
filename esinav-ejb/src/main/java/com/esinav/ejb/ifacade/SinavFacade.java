@@ -7,15 +7,13 @@
 package com.esinav.ejb.ifacade;
 
 import com.esinav.ejb.dao.SinavDao;
+import com.esinav.ejb.entity.Kullanici;
 import com.esinav.ejb.entity.Sinav;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
-/**
- *
- * @author myavuz
- */
+
 @Stateless
 public class SinavFacade implements SinavFacadeLocal {
 
@@ -47,5 +45,9 @@ public class SinavFacade implements SinavFacadeLocal {
         return sinavDao.listAll();
     }
 
-    
+
+    @Override
+    public List<Sinav> getKullaniciSinav(Kullanici kullanici) {
+        return sinavDao.getKullaniciSinav(kullanici);
+    }
 }

@@ -6,6 +6,8 @@
 
 package com.esinav.ejb.entity;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.hibernate.engine.FetchStrategy;
 
 import java.io.Serializable;
@@ -13,10 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.*;
 
-/**
- *
- * @author myavuz
- */
+
 @Entity
 @NamedQuery(name="Ders.findDersByName",query = "SELECT d FROM Ders d left join fetch d.uniteler where d.dersAdi=:dersadi")
 public class Ders implements Serializable {

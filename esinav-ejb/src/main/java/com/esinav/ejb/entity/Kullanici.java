@@ -1,16 +1,11 @@
 package com.esinav.ejb.entity;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 
 
 @Entity
@@ -33,8 +28,8 @@ public class Kullanici {
     private String password;
    
     @JoinTable(name = "KULLANICI_ROL",joinColumns = {@JoinColumn(name = "KULLANICI_ID")},inverseJoinColumns = {@JoinColumn(name = "ROL_ID")})
-    @ManyToMany
-    private List<Rol> roller; //her kullanici 1 den fazla role sahiptir. 
+    @ManyToMany(fetch = FetchType.EAGER)
+    private List<Rol> roller=new ArrayList<Rol>(); //her kullanici 1 den fazla role sahiptir.
     @JoinTable(name = "KULLANICI_SINAV",joinColumns = {@JoinColumn(name = "KULLANICI_ID")},inverseJoinColumns = {@JoinColumn(name = "SINAV_ID")})
     @ManyToMany
     private List<Sinav> sinavlar;

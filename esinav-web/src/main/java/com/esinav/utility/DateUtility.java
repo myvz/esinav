@@ -1,8 +1,6 @@
 package com.esinav.utility;
 
-/**
- * Created by myavuz on 26.04.2014.
- */
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;

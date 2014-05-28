@@ -1,8 +1,6 @@
 package com.esinav.filter;
 
-/**
- * Created by myavuz on 26.04.2014.
- */
+
 import java.io.IOException;
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;

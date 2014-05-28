@@ -13,10 +13,7 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
-/**
- *
- * @author myavuz
- */
+
 @Stateless
 public class UniteFacade implements UniteFacadeLocal {
 
