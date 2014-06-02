@@ -90,7 +90,7 @@ public class LoginController implements Serializable {
 
         HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
         HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
-
+        kullanici=null;
         if (session != null) {
             session.invalidate();
         }

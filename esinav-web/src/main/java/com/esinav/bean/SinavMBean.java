@@ -12,10 +12,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.inject.Inject;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 
 @ManagedBean
@@ -32,6 +29,8 @@ public class SinavMBean implements Serializable {
     private CevapAnahtari cevapAnahtari;
 
     private Map<Soru,Cevap> cevapMap;
+
+    private boolean isTaken=false;
 
     @EJB
     private CevapAnahtariFacadeLocal cevapAnahtariFacade;
@@ -72,6 +71,11 @@ public class SinavMBean implements Serializable {
 
     public void setSelectedSinav(Sinav selectedSinav) {
         this.selectedSinav = selectedSinav;
+        selectedSinav.getSorular();
+        for(Soru soru :selectedSinav.getSorular()) {
+            Collections.shuffle((List<?>) soru.getSecenekler());
+        }
+        Collections.shuffle(selectedSinav.getSorular());
     }
 
     public void onRowSelect(SelectEvent event) {
@@ -93,6 +97,7 @@ public class SinavMBean implements Serializable {
         cevapAnahtari.setSinav(selectedSinav);
         cevapAnahtari.setCevaplar(new ArrayList<Cevap>(cevapMap.values()));
         cevapAnahtariFacade.save(cevapAnahtari);
+        isTaken=true;
     }
     private Soru getSelectedSoru() {
 
@@ -100,5 +105,30 @@ public class SinavMBean implements Serializable {
             if (soru.getSecenekler().contains(selectedSecenek)) return soru;
         }
         return null;
+    }
+
+    public boolean isTaken() {
+        return isTaken;
+    }
+
+    public void setTaken(boolean isTaken) {
+        this.isTaken = isTaken;
+    }
+
+    public Integer getCevapCount() {
+          return cevapAnahtari.getCevaplar().size();
+    }
+
+    public Integer getDogruSayisi() {
+        Integer counter=0;
+        for (Soru soru :selectedSinav.getSorular()) {
+            if (cevapMap.get(soru).getKullaniciCevabi()==soru.getDogruSecenek()) {
+               counter++;
+            }
+        }
+        return counter;
+    }
+    public Integer getYanlisSayisi() {
+        return getCevapCount()-getDogruSayisi();
     }
 }

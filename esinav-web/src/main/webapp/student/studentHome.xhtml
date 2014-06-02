@@ -26,7 +26,7 @@
                 </p:column>
             </p:dataTable>
             <p:panel id="sinav_page">
-                <p:dataTable  rendered="#{sinavMBean.selectedSinav ne null}" value="#{sinavMBean.selectedSinav.sorular}" var="soru">
+                <p:dataTable  rendered="#{sinavMBean.selectedSinav ne null and sinavMBean.taken eq false}" value="#{sinavMBean.selectedSinav.sorular}" var="soru">
                     <f:facet name="header">
                         #{sinavMBean.selectedSinav.sinavAdi}
                     </f:facet>
@@ -41,8 +41,16 @@
                         </p:dataTable>
                     </p:column>
                 </p:dataTable>
-                <p:commandButton actionListener="#{sinavMBean.save}" value="Sınavı Bitir"/>
+                <p:commandButton rendered="#{sinavMBean.selectedSinav ne null and sinavMBean.taken eq false}" actionListener="#{sinavMBean.save}" value="Sınavı Bitir" update=":form:result_page :form:sinav_page"/>
             </p:panel>
+            <p:panel id="result_page">
+                <p:panelGrid columns="1" columnClasses="label,value" rendered="#{sinavMBean.taken}" title="Sınav Sonucu">
+                    <h:outputText value="Cevap Sayısı : #{sinavMBean.cevapCount}"/>
+                    <h:outputText value="Doğru Sayısı :#{sinavMBean.dogruSayisi}"/>
+                    <h:outputText value="Yanlış Sayısı :#{sinavMBean.getYanlisSayisi()}"/>
+                </p:panelGrid>
+            </p:panel>
+
         </h:form>
     </ui:define>
 </ui:composition>

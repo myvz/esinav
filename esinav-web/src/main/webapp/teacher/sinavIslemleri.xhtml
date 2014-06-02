@@ -5,10 +5,115 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:ui="http://java.sun.com/jsf/facelets">
     <ui:define name="content">
-        <h:form>
-            <f:view>
-                <h:outputLabel value="Hello, world"/>
-            </f:view>
+        <h:form id="form">
+
+              <p:tabView id="sinav_islemleri" dynamic="true" cache="true" effect="fade" effectDuration="normal">
+
+                  <p:tab id="sinav_tanimlama" title="Sınav Tanımlama">
+                      <p:wizard flowListener="#{sinavWizardMBean.onFlowProcess}">
+                          <p:growl id="msgs" showDetail="true" sticky="false"/>
+                          <p:tab id="sinav_bilgileri" title="Sınav">
+                              <p:panel header="Sınav Bilgileri">
+                                  <h:panelGrid columns="2" columnClasses="label, value" title="Sınav Bilgileri">
+                                      <h:outputText value="Sınav Adı : *"/>
+                                      <p:inputText value="#{sinavWizardMBean.sinav.sinavAdi}" required="true" label="Sınav Adı"/>
+
+                                      <h:outputText value="Sınav Açıklaması : *"/>
+                                      <p:inputText value="#{sinavWizardMBean.sinav.sinavAciklamasi}" label="Sınav Açıklaması"/>
+
+
+                                      <h:outputText value="Sinav Tarihi ve Zamanı : *"/>
+                                      <p:calendar id="datetime" value="#{sinavWizardMBean.sinav.sinavZamani}" pattern="dd/MM/yyyy HH:mm:ss" />
+
+                                      <h:outputText value="Sinav Süresi :*"/>
+                                      <p:inputText id="sinav_sure" value="#{sinavWizardMBean.sinav.sinavSuresi}" label="Sınav Süresi" />
+
+
+                                      <h:outputText value=" "/>
+                                      <p:slider for="sinav_sure" step="10" />
+                                  </h:panelGrid>
+                              </p:panel>
+                          </p:tab>
+                          <p:tab id="kullanici_secim" title="Kullanıcı">
+                              <p:panel header="Kullanıcı Seçimi">
+                                   <p:dataTable id="student_list" var="student" value="#{sinavWizardMBean.kullaniciList}" selectionMode="multiple" selection="#{sinavWizardMBean.studentList}" rowKey="#{student.id}">
+                                       <p:column headerText="Adı">
+                                           <h:outputText value="#{student.adi}"/>
+                                       </p:column>
+                                       <p:column headerText="Soyadı">
+                                           <h:outputText value="#{student.soyadi}"/>
+                                       </p:column>
+                                       <p:column headerText="Kullanici Adı">
+                                           <h:outputText value="#{student.username}"/>
+                                       </p:column>
+                                   </p:dataTable>
+                              </p:panel>
+                          </p:tab>
+
+                          <p:tab id="soru_sorgula" title="Soru">
+                              <p:panel id="sorgu_paneli" header="Soru Sorgulama">
+                                  <h:panelGrid columns="2" columnClasses="label, value">
+                                      <h:outputText value="Ders :"/>
+                                      <p:selectOneMenu id="sorgu_derslist" value="#{sinavWizardMBean.soruMBean.ders}" converter="dersConverter" required="true"
+                                                       style="width:160px" filter="true" filterMatchMode="startsWith">
+                                          <f:selectItem itemValue="" itemLabel="Seçiniz"/>
+                                          <f:selectItems value="#{commonService.dersList}" var="ders" itemValue="#{ders}" itemLabel="#{ders.dersAdi}"/>
+                                          <p:ajax event="change" update="sorgu_paneli"/>
+                                      </p:selectOneMenu>
+                                      <h:outputText id="l_uniteler" value="Uniteler : *" rendered="#{sinavWizardMBean.soruMBean.ders ne null}"/>
+                                      <p:dataTable id="dt_uniteler" style="width: 100%" rendered="#{sinavWizardMBean.soruMBean.ders ne null}" var="unite" value="#{sinavWizardMBean.soruMBean.ders.uniteler}" selectionMode="single" selection="#{sinavWizardMBean.soruMBean.unite}"
+                                                   rowKey="#{unite.id}" emptyMessage="Kayıt Bulunamadı" >
+                                          <f:facet name="header">
+                                              Unite Seçiniz
+                                          </f:facet>
+                                          <p:ajax event="rowSelect" listener="#{sinavWizardMBean.soruMBean.onRowSelect}" update=":form:sinav_islemleri:soru_list_paneli" process="dt_uniteler"/>
+                                          <p:ajax event="rowUnselect" listener="#{sinavWizardMBean.soruMBean.onRowUnselect}" update=":form:sinav_islemleri:soru_list_paneli" process="dt_uniteler"/>
+                                          <p:column headerText="Ünite Adı">
+                                              <h:outputText value="#{unite.uniteAdi}"/>
+                                          </p:column>
+                                          <p:column headerText="Seviye">
+                                              <h:outputText value="#{unite.seviye}"/>
+                                          </p:column>
+
+                                      </p:dataTable>
+
+                                  </h:panelGrid>
+                                  <h:panelGrid id="soru_list_paneli" columns="1" width="100%" rendered="#{sinavWizardMBean.soruMBean.ders.uniteler ne null}">
+                                      <p:dataTable id="soru_list" value="#{sinavWizardMBean.soruMBean.soruList}" var="soru" selection="#{sinavWizardMBean.soruList}"  rowKey="#{soru.id}" style="margin-bottom:0" emptyMessage="Soru Bulunamdı">
+                                          <p:column selectionMode="multiple" style="width: 2%;text-align: center"/>
+                                          <p:column headerText="Sorular">
+                                              <p:fieldset legend="Soru" toggleable="true" toggleSpeed="200">
+                                                  <h:outputText escape="false" value=" #{soru.soru}"/> <br/><br/>
+                                                  <ui:repeat id="secenek_list" value="#{soru.secenekler}" var="secenek">
+                                                      <li><h:outputText escape="false" style="padding-left: 10px" value=" #{secenek.secenek}"/></li>
+                                                  </ui:repeat>
+                                              </p:fieldset>
+                                          </p:column>
+                                          <f:facet name="footer">
+                                              <p:commandButton process="soru_list" update=":form:sinav_islemleri:selected_soru_list_paneli" value="Ekle"/>
+                                          </f:facet>
+                                      </p:dataTable>
+                                  </h:panelGrid>
+                                  <br/>
+                                  <br/>
+                                  <h:panelGrid id="selected_soru_list_paneli" columns="1" width="100%" title="Seçilen Sorular">
+                                      <p:dataTable id="selected_soru_list" value="#{sinavWizardMBean.sinavSorulari}" var="soru" emptyMessage="Soru Eklenmedi">
+                                          <p:column headerText="Sorular">
+                                              <p:fieldset legend="Soru" toggleable="true" toggleSpeed="200">
+                                                  <h:outputText escape="false" value=" #{soru.soru}"/> <br/><br/>
+                                                  <ui:repeat id="secenek_list" value="#{soru.secenekler}" var="secenek">
+                                                      <li><h:outputText escape="false" style="padding-left: 10px" value=" #{secenek.secenek}"/></li>
+                                                  </ui:repeat>
+                                              </p:fieldset>
+                                          </p:column>
+                                      </p:dataTable>
+                                  </h:panelGrid>
+                                  <p:commandButton action="teacherHome.xhtml" value="Sınav Oluştur" actionListener="#{sinavWizardMBean.save}" process="@this"/>
+                              </p:panel>
+                          </p:tab>
+                      </p:wizard>
+                  </p:tab>
+              </p:tabView>
         </h:form>
     </ui:define>
 </ui:composition>

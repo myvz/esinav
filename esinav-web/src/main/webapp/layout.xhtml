@@ -9,17 +9,18 @@
 <h:body style="background-color: #CEE3F6;">
     <h:form>
         <p:dock position="top">
-            <p:menuitem value="Kullanıcı" icon="/resources/images/dock/kullanici.png" url="../admin/kullaniciIslemleri.xhtml"/>
-            <p:menuitem value="Ders"  icon="/resources/images/dock/ders.png" url="../admin/dersIslemleri.xhtml"/>
-            <p:menuitem value="Konu"  icon="/resources/images/dock/konu.png" url="../teacher/konuIslemleri.xhtml"/>
-            <p:menuitem value="Soru"  icon="/resources/images/dock/soru.png" url="../teacher/soruIslemleri.xhtml"/>
-            <p:menuitem value="Sınav" icon="/resources/images/dock/sinav.png" url="../teacher/sinavIslemleri.xhtml"/>
+            <p:menuitem rendered="#{rolService.isAdmin(loginController.kullanici)}" value="Kullanıcı" icon="/resources/images/dock/kullanici.png" url="../admin/kullaniciIslemleri.xhtml"/>
+            <p:menuitem rendered="#{rolService.isAdmin(loginController.kullanici)}" value="Ders"  icon="/resources/images/dock/ders.png" url="../admin/dersIslemleri.xhtml"/>
+            <p:menuitem rendered="#{rolService.isTeacher(loginController.kullanici)}" value="Konu"  icon="/resources/images/dock/konu.png" url="../teacher/konuIslemleri.xhtml"/>
+            <p:menuitem rendered="#{rolService.isTeacher(loginController.kullanici)}" value="Soru"  icon="/resources/images/dock/soru.png" url="../teacher/soruIslemleri.xhtml"/>
+            <p:menuitem rendered="#{rolService.isTeacher(loginController.kullanici)}" value="Sınav" icon="/resources/images/dock/sinav.png" url="../teacher/sinavIslemleri.xhtml"/>
+            <p:menuitem value="Çıkış" icon="/resources/images/dock/logout.png" actionListener="#{loginController.logout}" url="../login.xhtml"/>
         </p:dock>
-        <div class="content">
+    </h:form>
+    <div class="content">
             <ui:insert name="content">
                 Default Content
             </ui:insert>
-        </div>
-    </h:form>
+    </div>
 </h:body>
 </html>
