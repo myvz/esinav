@@ -94,7 +94,7 @@ public class LoginController implements Serializable {
         if (session != null) {
             session.invalidate();
         }
-        FacesContext.getCurrentInstance().getApplication().getNavigationHandler().handleNavigation(FacesContext.getCurrentInstance(), null, "/Login.xhtml?faces-redirect=true");
+        FacesContext.getCurrentInstance().getApplication().getNavigationHandler().handleNavigation(FacesContext.getCurrentInstance(), null, "/login.xhtml?faces-redirect=true");
     }
 
     public Kullanici getKullanici() {

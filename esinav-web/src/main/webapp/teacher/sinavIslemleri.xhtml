@@ -8,6 +8,41 @@
         <h:form id="form">
 
               <p:tabView id="sinav_islemleri" dynamic="true" cache="true" effect="fade" effectDuration="normal">
+                  <p:tab id="sinav_sorgulama" title="Sınav İzleme">
+                      <p:panel  id="cevap_anahtari">
+                       <p:dataTable value="#{sinavSorgulamaMBean.sahipSinavList}" var="sinav" selection="#{sinavSorgulamaMBean.selectedSinav}"
+                               rowKey="#{sinav.id}" selectionMode="single">
+                           <p:ajax event="rowSelect" listener="#{sinavSorgulamaMBean.onRowSelect}" update=":form:sinav_islemleri:cevap_anahtari" />
+                           <p:column headerText="Sınav Adı">
+                                 <h:outputText value="#{sinav.sinavAdi}"/>
+                           </p:column>
+                           <p:column headerText="Sinav Açıklaması">
+                                 <h:outputText value="#{sinav.sinavAciklamasi}"/>
+                           </p:column>
+                           <p:column headerText="Sınav Tarihi">
+                                <h:outputText value="#{sinav.sinavZamani}"/>
+                           </p:column>
+                       </p:dataTable>
+                      <br/>
+                      <br/>
+                      <br/>
+
+                            <p:dataTable  value="#{sinavSorgulamaMBean.cevapAnahtariList}" var="cevapAnahtari" rendered="#{sinavSorgulamaMBean.cevapAnahtariList ne null}">
+                                <f:facet name="header">
+                                    Kullanıcı Sınav Sonucu
+                                </f:facet>
+                                <p:column headerText="Kullanıcı " sortBy="#{cevapAnahtari.kullanici.adi}">
+                                    <h:outputText value="#{cevapAnahtari.kullanici.adi}"/>
+                                </p:column>
+                                <p:column headerText="Doğru Sayısı" sortBy="#{cevapAnahtari.dogruSayisi}">
+                                    <h:outputText value="#{cevapAnahtari.dogruSayisi}"/>
+                                </p:column>
+                                <p:column headerText="Yanlış Sayısı" sortBy="#{cevapAnahtari.yanlisSayisi}">
+                                    <h:outputText value="#{cevapAnahtari.yanlisSayisi}"/>
+                                </p:column>
+                            </p:dataTable>
+                      </p:panel>
+                  </p:tab>
 
                   <p:tab id="sinav_tanimlama" title="Sınav Tanımlama">
                       <p:wizard flowListener="#{sinavWizardMBean.onFlowProcess}">

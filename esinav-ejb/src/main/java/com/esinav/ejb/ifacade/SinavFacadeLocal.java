@@ -21,5 +21,7 @@ public interface SinavFacadeLocal {
     public Sinav update(Sinav sinav);
     public List<Sinav> findAll();
     public List<Sinav> getKullaniciSinav(Kullanici kullanici);
+    public List<Sinav> getSinavSahipSinav(Kullanici kullanici);
+
 
 }

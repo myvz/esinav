@@ -25,5 +25,11 @@ public class SinavDao extends GenericDao<Sinav> {
         List<Sinav> sinavList=query.getResultList();
         return sinavList;
     }
+    public List<Sinav> getSinavSahipSinav(Kullanici kullanici) {
+        Query query=em.createQuery("select s from Sinav s join s.sinavSahibi k where k.id =?1");
+        query.setParameter(1,kullanici.getId()) ;
+        List<Sinav> sinavList=query.getResultList();
+        return sinavList;
+    }
     
 }

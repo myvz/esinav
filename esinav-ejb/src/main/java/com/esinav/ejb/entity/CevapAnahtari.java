@@ -23,6 +23,13 @@ public class CevapAnahtari implements Serializable{
   @Id
   @GeneratedValue(strategy =GenerationType.IDENTITY)
   private Long id;
+
+@Column(name="YANLIS_SAYISI")
+private Integer yanlisSayisi;
+@Column(name="CEVAP_SAYISI")
+private Integer cevapSayisi;
+@Column(name="DOGRU_SAYISI")
+private Integer dogruSayisi;
   
 /*  @JoinTable(name = "CEVAP_ANAHTARI_CEVAP",joinColumns = {@JoinColumn(name="CEVAP_ANAHTARI_ID")},
           inverseJoinColumns = {@JoinColumn(name = "CEVAP_ID")})*/
@@ -70,4 +77,28 @@ public class CevapAnahtari implements Serializable{
         this.kullanici = kullanici;
     }
 
+
+    public Integer getYanlisSayisi() {
+        return yanlisSayisi;
+    }
+
+    public void setYanlisSayisi(Integer yanlisSayisi) {
+        this.yanlisSayisi = yanlisSayisi;
+    }
+
+    public Integer getCevapSayisi() {
+        return cevapSayisi;
+    }
+
+    public void setCevapSayisi(Integer cevapSayisi) {
+        this.cevapSayisi = cevapSayisi;
+    }
+
+    public Integer getDogruSayisi() {
+        return dogruSayisi;
+    }
+
+    public void setDogruSayisi(Integer dogruSayisi) {
+        this.dogruSayisi = dogruSayisi;
+    }
 }

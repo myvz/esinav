@@ -50,4 +50,9 @@ public class SinavFacade implements SinavFacadeLocal {
     public List<Sinav> getKullaniciSinav(Kullanici kullanici) {
         return sinavDao.getKullaniciSinav(kullanici);
     }
+
+    @Override
+    public List<Sinav> getSinavSahipSinav(Kullanici kullanici) {
+        return sinavDao.getSinavSahipSinav(kullanici);
+    }
 }

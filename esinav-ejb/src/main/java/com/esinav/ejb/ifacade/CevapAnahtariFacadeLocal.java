@@ -6,8 +6,13 @@
 
 package com.esinav.ejb.ifacade;
 
+import com.esinav.ejb.entity.Cevap;
 import com.esinav.ejb.entity.CevapAnahtari;
+import com.esinav.ejb.entity.Kullanici;
+import com.esinav.ejb.entity.Sinav;
+
 import javax.ejb.Local;
+import java.util.List;
 
 
 @Local
@@ -17,6 +22,7 @@ public interface CevapAnahtariFacadeLocal {
     public CevapAnahtari update(CevapAnahtari cevapAnahtari);
     public void delete(CevapAnahtari cevapAnahtari);
     public CevapAnahtari find(Long entityID);
-    
+
+    public List<CevapAnahtari> findAll(Sinav sinav);
     
 }

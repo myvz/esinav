@@ -14,7 +14,7 @@
             <p:menuitem rendered="#{rolService.isTeacher(loginController.kullanici)}" value="Konu"  icon="/resources/images/dock/konu.png" url="../teacher/konuIslemleri.xhtml"/>
             <p:menuitem rendered="#{rolService.isTeacher(loginController.kullanici)}" value="Soru"  icon="/resources/images/dock/soru.png" url="../teacher/soruIslemleri.xhtml"/>
             <p:menuitem rendered="#{rolService.isTeacher(loginController.kullanici)}" value="Sınav" icon="/resources/images/dock/sinav.png" url="../teacher/sinavIslemleri.xhtml"/>
-            <p:menuitem value="Çıkış" icon="/resources/images/dock/logout.png" actionListener="#{loginController.logout}" url="../login.xhtml"/>
+            <p:menuitem value="Çıkış" icon="/resources/images/dock/logout.png" actionListener="#{loginController.logout}"/>
         </p:dock>
     </h:form>
     <div class="content">
