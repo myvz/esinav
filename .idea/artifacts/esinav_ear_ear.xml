@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="ear" name="esinav-ear:ear">
+    <output-path>$PROJECT_DIR$/esinav-ear/target</output-path>
+    <root id="archive" name="esinav-ear-1.0-SNAPSHOT.ear">
+      <element id="artifact" artifact-name="esinav-ear:ear exploded" />
+    </root>
+  </artifact>
+</component>

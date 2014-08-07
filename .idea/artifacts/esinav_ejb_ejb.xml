@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="ejb-jar" name="esinav-ejb:ejb">
+    <output-path>$PROJECT_DIR$/esinav-ejb/target</output-path>
+    <root id="archive" name="esinav-ejb-1.0-SNAPSHOT.jar">
+      <element id="artifact" artifact-name="esinav-ejb:ejb exploded" />
+    </root>
+  </artifact>
+</component>

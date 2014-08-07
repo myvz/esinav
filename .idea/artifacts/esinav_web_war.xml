@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="esinav-web:war">
+    <output-path>$PROJECT_DIR$/esinav-web/target</output-path>
+    <root id="archive" name="esinav-web-1.0-SNAPSHOT.war">
+      <element id="artifact" artifact-name="esinav-web:war exploded" />
+    </root>
+  </artifact>
+</component>

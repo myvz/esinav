@@ -79,6 +79,7 @@ public class DersMBean implements Serializable{
         FacesContext context=FacesContext.getCurrentInstance();
         context.addMessage(null, new FacesMessage("Basarisiz", "Eklenen ders zaten mevcut"));
 
+
     }
     private Boolean validateDersAdi() {
         return commonService.isDersNameAvailable(ders);
