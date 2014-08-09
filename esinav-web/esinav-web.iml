@@ -37,6 +37,7 @@
     <orderEntry type="library" scope="PROVIDED" name="Maven: antlr:antlr:2.7.7" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.jboss:jandex:1.1.0.Final" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.hibernate:hibernate-entitymanager:4.3.4.Final" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: commons-lang:commons-lang:2.6" level="project" />
     <orderEntry type="library" name="Maven: org.primefaces:primefaces:4.0" level="project" />
     <orderEntry type="library" name="Maven: com.sun.faces:jsf-api:2.1.11" level="project" />
     <orderEntry type="library" name="Maven: com.sun.faces:jsf-impl:2.1.11" level="project" />
@@ -45,6 +46,7 @@
     <orderEntry type="library" name="Maven: javax.servlet.jsp:jsp-api:2.1" level="project" />
     <orderEntry type="library" name="Maven: org.glassfish.web:el-impl:2.2" level="project" />
     <orderEntry type="library" name="Maven: javax.el:el-api:2.2" level="project" />
+    <orderEntry type="library" name="Maven: org.primefaces.themes:all-themes:1.0.10" level="project" />
   </component>
 </module>
 
